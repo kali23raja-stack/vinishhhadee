@@ -1,0 +1,2241 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-image: url('../images/main-background.png'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Original Taskbar */
+.taskbar{
+    background-color: #f3f3f3;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    z-index: 110;
+    justify-content: center;
+}
+
+.startmenu{
+    position: absolute; 
+    bottom: -655px;
+    width: 100%;
+    text-align: center;
+    transition: all 0.3s ease-in; 
+}
+
+.startmenu img{
+    border-radius: 8px;
+}
+
+.right{
+    justify-self: flex-end;
+    position: absolute;
+    right: 0;
+    margin: 6px 0;
+    height: 85%;
+}  
+
+.icons{
+    color: white;
+}
+
+/* ========== CMD WINDOW ========== */
+.cmd-window {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 450px;
+    background: #0C0C0C;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.cmd-titlebar {
+    background: #1E1E1E;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #2D2D2D;
+}
+
+.cmd-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #FFFFFF;
+    font-size: 13px;
+}
+
+.cmd-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.cmd-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.cmd-btn {
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-size: 16px;
+    width: 32px;
+    height: 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.cmd-btn:hover {
+    background: #333333;
+}
+
+.cmd-btn.close:hover {
+    background: #E81123;
+}
+
+.cmd-content {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    color: #CCCCCC;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.cmd-output {
+    margin-bottom: 4px;
+    color: #CCCCCC;
+}
+
+.cmd-line {
+    color: #00FF00;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* ========== WINDOWS 11 SECURITY WINDOWS ========== */
+.win-security-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(243, 243, 243, 0.95);
+    backdrop-filter: blur(40px);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.win-security-window:hover {
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+}
+
+/* Screen 1: Critical Alert - Smallest (Now Wider for Horizontal Layout) */
+.win-screen-1 {
+    width: 680px;
+    min-height: 420px;
+    z-index: 103;
+}
+
+/* Screen 2: Firewall - Portrait/Tall */
+.win-screen-2 {
+    width: 480px;
+    min-height: 650px;
+    z-index: 102;
+    animation: zoomPulse 8s ease-in-out infinite;
+}
+
+/* Screen 3: Antivirus - Largest */
+.win-screen-3 {
+    width: 850px;
+    min-height: 550px;
+    z-index: 101;
+}
+
+@keyframes zoomPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.02); }
+}
+
+/* ========== TITLEBAR ========== */
+.win-titlebar {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F0F0F0 100%);
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.win-title-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.win-title-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.win-title-text {
+    font-size: 13px;
+    font-weight: 400;
+    color: black;
+}
+
+.win-controls {
+    display: flex;
+    gap: 12px;
+}
+
+.win-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 14px;
+    width: 40px;
+    height: 28px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 4px;
+}
+
+.win-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.win-btn.close:hover {
+    background: #E81123;
+    color: white;
+}
+
+/* ========== CONTENT AREA ========== */
+.win-content {
+    padding: 24px;
+    background: #FAFAFA;
+}
+
+/* ========== SCREEN 1: ALERT CONTENT ========== */
+.win-alert-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.win-alert-icon-img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.win-alert-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+    margin: 0 0 4px 0;
+}
+
+.win-alert-subtitle {
+    font-size: 13px;
+    color: #5F5F5F;
+    margin: 0;
+}
+
+.win-alert-body-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.win-alert-left-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.win-message-box {
+    background: #FFFFFF;
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 4px solid #D13438;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.win-message-box p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #3F3F3F;
+    margin: 0;
+}
+
+.win-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.win-info-item {
+    background: #FFFFFF;
+    padding: 12px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.win-info-label {
+    font-size: 11px;
+    color: #707070;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.win-info-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+}
+
+.win-info-value.status-blocked {
+    color: #D13438;
+}
+
+/* ========== PHONE BOX ========== */
+.win-phone-box {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%);
+    padding: 16px;
+    border-radius: 8px;
+    border: 2px solid #0078D4;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0, 120, 212, 0.1);
+}
+
+.win-phone-box.compact {
+    justify-content: center;
+    flex-direction: column;
+    padding: 12px;
+}
+
+.win-phone-box.large {
+    margin-top: 8px;
+}
+
+.win-phone-box-screen1 {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%);
+    padding: 20px 16px;
+    border-radius: 8px;
+    border: 2px solid #0078D4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 120, 212, 0.1);
+    min-width: 200px;
+    text-align: center;
+}
+
+.win-phone-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.win-phone-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.win-phone-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #0078D4;
+    letter-spacing: 1px;
+}
+
+.win-phone-number {
+    font-size: 18px;
+    font-weight: 700;
+    color: black;
+    letter-spacing: 0.5px;
+}
+
+.win-phone-action {
+    font-size: 11px;
+    color: #5F5F5F;
+}
+
+/* ========== SCREEN 2: FIREWALL CONTENT ========== */
+.firewall-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.win-section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.win-firewall-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.win-section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+    margin: 0 0 2px 0;
+}
+
+.win-section-subtitle {
+    font-size: 12px;
+    color: #5F5F5F;
+    margin: 0;
+}
+
+.win-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.win-stat-card {
+    background: #FFFFFF;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.win-stat-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: #707070;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.win-stat-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+
+.win-stat-value.danger {
+    color: #D13438;
+}
+
+.win-graph-section {
+    background: #FFFFFF;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.win-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #0078D4;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.win-canvas {
+    width: 100%;
+    height: 100px;
+    display: block;
+}
+
+.win-log-section {
+    background: #FFFFFF;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.win-log-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.win-log-entry {
+    padding: 10px 12px;
+    background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+    border-radius: 4px;
+    font-size: 12px;
+    color: #3F3F3F;
+    border-left: 3px solid #FF9800;
+}
+
+.win-log-entry:nth-child(odd) {
+    background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%);
+    border-left-color: #F44336;
+}
+
+.win-log-entry:nth-child(3n) {
+    background: linear-gradient(135deg, #F5F5F5 0%, #E0E0E0 100%);
+    border-left-color: #9E9E9E;
+}
+
+/* ========== SCREEN 3: DEFENDER CONTENT ========== */
+.defender-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.defender-header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFFFFF;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.defender-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+
+.defender-header-right {
+    flex-shrink: 0;
+}
+
+.defender-status-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    background: rgba(209, 52, 56, 0.05);
+    border-radius: 6px;
+}
+
+.defender-status-badge span {
+    font-size: 10px;
+    font-weight: 700;
+    color: #D13438;
+    letter-spacing: 0.5px;
+}
+
+.defender-shield {
+    flex-shrink: 0;
+}
+
+.defender-header-text {
+    flex: 1;
+}
+
+.defender-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 4px 0;
+}
+
+.defender-subtitle {
+    font-size: 12px;
+    color: #5F5F5F;
+    margin: 0 0 12px 0;
+}
+
+.defender-progress {
+    width: 100%;
+}
+
+.defender-progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #E0E0E0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.defender-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #0078D4 0%, #00BCF2 100%);
+    border-radius: 3px;
+    animation: progressAnim 2s ease-in-out infinite;
+}
+
+@keyframes progressAnim {
+    0% { width: 0%; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+.defender-two-column {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 16px;
+}
+
+.defender-left-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.defender-stat-box {
+    background: #FFFFFF;
+    padding: 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.defender-stat-box.threat {
+    border-left: 4px solid #D13438;
+}
+
+.defender-stat-box.scan {
+    border-left: 4px solid #0078D4;
+}
+
+.defender-stat-icon {
+    font-size: 32px;
+}
+
+.defender-stat-icon-svg {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+.defender-stat-number {
+    font-size: 36px;
+    font-weight: 700;
+    color: #D13438;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.defender-stat-number-small {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0078D4;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.defender-stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #707070;
+    letter-spacing: 0.5px;
+}
+
+.defender-right-col {
+    background: #FFFFFF;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.defender-log-header {
+    margin-bottom: 12px;
+}
+
+.defender-log-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0078D4;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.defender-log-subtitle {
+    font-size: 11px;
+    color: #5F5F5F;
+}
+
+.defender-threat-log {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.threat-entry {
+    padding: 10px 12px;
+    background: #FAFAFA;
+    border-radius: 4px;
+    border-left: 3px solid #D13438;
+    font-size: 12px;
+}
+
+.threat-name {
+    font-weight: 600;
+    color: white;
+    margin-bottom: 2px;
+}
+
+.threat-severity {
+    font-size: 10px;
+    color: #FFFFFF;
+    background: #D13438;
+    padding: 2px 6px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+.threat-severity.high {
+    background: #D13438;
+}
+
+.threat-severity.medium {
+    background: #FF9800;
+}
+
+.threat-severity.low {
+    background: #9E9E9E;
+}
+
+/* ========== BUTTONS ========== */
+.win-button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.win-button {
+    padding: 8px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.win-button.primary {
+    background: #0078D4;
+    color: white;
+}
+
+.win-button.primary:hover {
+    background: #005A9E;
+}
+
+.win-button.secondary {
+    background: #E0E0E0;
+    color: white;
+}
+
+.win-button.secondary:hover {
+    background: #D0D0D0;
+}
+
+/* ========== FIXED CALL BOX ========== */
+.win-call-box {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%);
+    padding: 16px;
+    border-radius: 12px;
+    border: 2px solid #0078D4;
+    box-shadow: 0 8px 24px rgba(0, 120, 212, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 500;
+    transition: all 0.3s;
+}
+
+.win-call-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 120, 212, 0.3);
+}
+
+.win-call-icon img {
+    width: 48px;
+    height: 48px;
+}
+
+.win-call-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #0078D4;
+    letter-spacing: 1px;
+}
+
+.win-call-number {
+    font-size: 18px;
+    font-weight: 700;
+    color: black;
+    letter-spacing: 0.5px;
+}
+
+.win-call-action {
+    font-size: 11px;
+    color: #5F5F5F;
+}
+
+/* ========== NOTIFICATIONS ========== */
+.win-notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.win-notification {
+    background: rgba(243, 243, 243, 0.98);
+    backdrop-filter: blur(40px);
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    animation: slideInRight 0.4s ease-out;
+    pointer-events: all;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+}
+
+.win-notification.removing {
+    animation: slideOutRight 0.3s ease-in forwards;
+}
+
+.win-notification-header {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F0F0F0 100%);
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.win-notification-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.win-notification-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: black;
+    flex: 1;
+}
+
+.win-notification-body {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.win-notification-alert-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #FFE5E5 0%, #FFCCCC 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.win-notification-content {
+    flex: 1;
+}
+
+.win-notification-virus-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 4px;
+}
+
+.win-notification-severity {
+    font-size: 11px;
+    color: #FFFFFF;
+    background: #D13438;
+    padding: 2px 8px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.win-notification-severity.high {
+    background: #D13438;
+}
+
+.win-notification-severity.medium {
+    background: #FF9800;
+}
+
+.win-notification-severity.low {
+    background: #9E9E9E;
+}
+
+/* ========== SYSTEM TRAY CLOCK ========== */
+.win-system-tray {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 120;
+}
+
+.win-clock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.win-clock:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.win-time {
+    font-size: 12px;
+    font-weight: 500;
+    color: white;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.win-date {
+    font-size: 10px;
+    color: #3F3F3F;
+    line-height: 1;
+}
+
+/* ========== CPU SYSTEM MONITOR (Bottom Left) ========== */
+.win-cpu-monitor-box {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    width: 280px;
+    background: rgba(243, 243, 243, 0.95);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    z-index: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+.win-cpu-titlebar {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F0F0F0 100%);
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.win-cpu-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: black;
+}
+
+.win-cpu-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.win-cpu-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 12px;
+    width: 28px;
+    height: 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-radius: 3px;
+}
+
+.win-cpu-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.win-cpu-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-bottom: 1px solid #E5E5E7;
+}
+
+.win-cpu-icon {
+    width: 36px;
+    height: 36px;
+    background: #F5F5F7;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.win-cpu-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.win-cpu-title-text {
+    flex: 1;
+}
+
+.win-cpu-title-text h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+    margin: 0 0 2px;
+}
+
+.win-cpu-title-text p {
+    font-size: 11px;
+    color: #5F5F5F;
+    margin: 0;
+}
+
+.win-cpu-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px;
+}
+
+.win-cpu-stat-item {
+    background: #F5F5F7;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+}
+
+.win-cpu-stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: black;
+    margin-bottom: 4px;
+    line-height: 1;
+}
+
+.win-cpu-stat-value.warning {
+    color: #FF9800;
+}
+
+.win-cpu-stat-value.critical {
+    color: #D13438;
+}
+
+.win-cpu-stat-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #5F5F5F;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.win-cpu-progress-section {
+    margin: 12px 16px 16px;
+}
+
+.win-cpu-progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 11px;
+    color: #5F5F5F;
+    font-weight: 600;
+}
+
+.win-cpu-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #E5E5E7;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.win-cpu-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0078D4, #005A9E);
+    border-radius: 4px;
+    transition: width 0.5s ease, background 0.3s ease;
+}
+
+.win-cpu-progress-fill.warning {
+    background: linear-gradient(90deg, #FF9800, #F57C00);
+}
+
+.win-cpu-progress-fill.critical {
+    background: linear-gradient(90deg, #D13438, #B71C1C);
+}
+
+/* ========== AGE VERIFICATION MODAL ========== */
+.win-age-verification-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 9999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(9px);
+    cursor: pointer;
+}
+
+.win-age-verification-modal {
+    background: black;
+    border-radius: 12px;
+    padding: 40px;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    animation: winAgeModalSlideIn 0.4s ease-out;
+}
+
+@keyframes winAgeModalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.win-age-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    background: #F5F5F5;
+    border: none;
+    border-radius: 50%;
+    color: black;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-weight: 300;
+}
+
+.win-age-modal-close:hover {
+    background: #E5E5E5;
+    transform: scale(1.1);
+}
+
+.win-age-modal-icon {
+    margin-bottom: 24px;
+}
+
+.win-age-modal-icon img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.win-age-modal-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.win-age-modal-text {
+    font-size: 16px;
+    color: white;
+    margin: 0 0 12px;
+    line-height: 1.5;
+}
+
+.win-age-modal-question {
+    font-size: 18px;
+    color: white;
+    font-weight: 600;
+    margin: 24px 0 32px;
+}
+
+.win-age-modal-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+.win-age-btn {
+    padding: 14px 40px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none;
+    min-width: 120px;
+}
+
+.win-age-btn-no {
+    background: #F5F5F5;
+    color: black;
+    border: 2px solid #E5E5E5;
+}
+
+.win-age-btn-no:hover {
+    background: #E5E5E5;
+    border-color: #D2D2D7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.win-age-btn-yes {
+    background: #0078D4;
+    color: #ffffff;
+    border: 2px solid #0078D4;
+}
+
+.win-age-btn-yes:hover {
+    background: #005A9E;
+    border-color: #005A9E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 120, 212, 0.4);
+}
+
+.win-age-btn:active {
+    transform: scale(0.95);
+}
+
+/* ========== VIDEO PLAYER OVERLAY ========== */
+.win-video-player-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.win-video-player-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.win-video-player-header {
+    background: black;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    border-bottom: 1px solid black;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.win-video-logo img {
+    height: 60px;
+    max-width: 200px;
+    object-fit: contain;
+}
+
+.win-video-search {
+    flex: 1;
+    max-width: 600px;
+}
+
+.win-video-search input {
+    width: 100%;
+    padding: 12px 20px;
+    background: #F5F5F5;
+    border: 2px solid #E5E5E5;
+    border-radius: 6px;
+    color: white;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: all 0.2s ease;
+}
+
+.win-video-search input:focus {
+    outline: none;
+    background: #FAFAFA;
+    border-color: #0078D4;
+}
+
+.win-close-video-player {
+    width: 40px;
+    height: 40px;
+    background: #615959;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.win-close-video-player:hover {
+    background: #E5E5E5;
+    transform: scale(1.1);
+}
+
+/* Main Content */
+.win-video-player-content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    background: black;
+}
+
+.win-video-main-section {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+.win-video-player-wrapper {
+    background: #000000;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.win-video-player-wrapper video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.win-video-info {
+    margin-bottom: 16px;
+}
+
+.win-video-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 8px;
+}
+
+.win-video-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 14px;
+    color: white;
+}
+
+.win-video-actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.win-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #615959;
+    border: none;
+    border-radius: 24px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.win-action-btn:hover {
+    background: #615959;
+    transform: translateY(-2px);
+}
+
+.win-channel-info {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.win-channel-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #F5F5F5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.win-channel-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.win-channel-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 4px;
+}
+
+.win-channel-subs {
+    font-size: 13px;
+    color: white;
+    margin: 0;
+}
+
+.win-video-description {
+    background: #615959;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.win-video-description h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 8px;
+}
+
+.win-video-description p {
+    font-size: 14px;
+    color: white;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.win-comments-section {
+    margin-top: 20px;
+}
+
+.win-comments-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 16px;
+}
+
+.win-comment-input {
+    margin-bottom: 24px;
+}
+
+.win-comment-input input {
+    width: 100%;
+    padding: 12px 16px;
+    background: #615959;
+    border: 2px solid #E5E5E5;
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.win-comment-input input:focus {
+    outline: none;
+    border-color: #615959;
+}
+
+.win-comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.win-comment {
+    display: flex;
+    gap: 12px;
+}
+
+.win-comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #0078D4;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.win-comment-content {
+    flex: 1;
+}
+
+.win-comment-author {
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 4px;
+}
+
+.win-comment-author span {
+    color: #5F5F5F;
+    font-weight: 400;
+    margin-left: 8px;
+}
+
+.win-comment-content p {
+    font-size: 14px;
+    color: white;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Sidebar */
+.win-video-sidebar {
+    width: 380px;
+    background: black;
+    overflow-y: auto;
+    padding: 20px;
+    border-left: 1px solid #E5E5E5;
+}
+
+.win-sidebar-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 16px;
+}
+
+.win-video-thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.win-video-thumbnail {
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.win-video-thumbnail:hover {
+    background: #615959;
+}
+
+.win-thumbnail-image {
+    width: 160px;
+    height: 90px;
+    background: #E5E5E5;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.win-thumbnail-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.win-thumbnail-overlay {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffffff;
+    font-size: 11px;
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+
+.win-thumbnail-info {
+    flex: 1;
+}
+
+.win-thumbnail-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.win-thumbnail-meta {
+    font-size: 12px;
+    color: white;
+}
+
+
+:root {
+    --win-bg-overlay: rgba(10, 15, 26, 0.95);
+    --win-bg-card: #0b0f19;
+    --win-bg-hover: #1f2937;
+    --win-border: #1f2937;
+    --win-primary: #0284c7;
+    --win-primary-hover: #0369a1;
+    --win-text-main: #f9fafb;
+    --win-text-muted: #9ca3af;
+    --win-radius: 0px;
+  }
+  
+  /* Fullscreen Backdrop */
+  .win-video-player-overlay.win-full-width {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: var(--win-bg-overlay);
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--win-text-main);
+  }
+  
+  /* Full-Width Container */
+  .win-video-player-container {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    max-height: 100%;
+    background: var(--win-bg-card);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  /* Header Bar */
+  .win-video-player-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 2rem;
+    border-bottom: 1px solid var(--win-border);
+    background: #060911;
+    flex-shrink: 0;
+  }
+  
+  .win-video-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  
+  .win-video-logo img {
+    height: 24px;
+    width: auto;
+  }
+  
+  .win-brand-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--win-text-main);
+  }
+  
+  .win-video-search {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+  }
+  
+  .win-search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--win-text-muted);
+  }
+  
+  .win-video-search input {
+    width: 100%;
+    padding: 0.55rem 0.75rem 0.55rem 2.5rem;
+    background: #121927;
+    border: 1px solid var(--win-border);
+    border-radius: 9999px;
+    color: var(--win-text-main);
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  
+  .win-video-search input:focus {
+    border-color: var(--win-primary);
+  }
+  
+  .win-close-video-player {
+    background: transparent;
+    border: none;
+    color: var(--win-text-muted);
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  
+  .win-close-video-player:hover {
+    background: var(--win-bg-hover);
+    color: var(--win-text-main);
+  }
+  
+  /* Scrollable Main Layout Grid */
+  .win-video-player-body {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 2rem;
+    padding: 1.5rem 2rem;
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+  
+  .win-video-main-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  /* Video Frame (Scales nicely in 16/9) */
+  .win-video-player-wrapper {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .win-video-player-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  /* Video Info */
+  .win-video-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+  }
+  
+  .win-video-meta {
+    font-size: 0.875rem;
+    color: var(--win-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  
+  /* Channel & Actions Bar */
+  .win-channel-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--win-border);
+    border-bottom: 1px solid var(--win-border);
+  }
+  
+  .win-channel-info {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  
+  .win-channel-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .win-channel-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .win-channel-subs {
+    font-size: 0.8rem;
+    color: var(--win-text-muted);
+    margin: 0;
+  }
+  
+  .win-video-actions {
+    display: flex;
+    gap: 0.6rem;
+  }
+  
+  /* Buttons */
+  .win-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+  }
+  
+  .win-btn-secondary {
+    background: #1a2332;
+    color: var(--win-text-main);
+  }
+  
+  .win-btn-secondary:hover {
+    background: #2a364a;
+  }
+  
+  .win-btn-primary {
+    background: var(--win-primary);
+    color: #fff;
+  }
+  
+  .win-btn-primary:hover {
+    background: var(--win-primary-hover);
+  }
+  
+  /* Description Box */
+  .win-video-description {
+    background: #111827;
+    border: 1px solid var(--win-border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #d1d5db;
+  }
+  
+  .win-video-description h3 {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.95rem;
+    color: var(--win-text-main);
+  }
+  
+  /* Comments Section */
+  .win-comments-section {
+    margin-top: 0.5rem;
+  }
+  
+  .win-comments-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .win-comments-header h3 {
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  .win-comments-badge {
+    background: #1f2937;
+    color: var(--win-text-muted);
+    font-size: 0.8rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+  }
+  
+  .win-comment-input {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .win-user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #374151;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .win-comment-input input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--win-border);
+    padding: 0.5rem 0;
+    color: var(--win-text-main);
+    outline: none;
+    font-size: 0.9rem;
+  }
+  
+  .win-comment-input input:focus {
+    border-color: var(--win-primary);
+  }
+  
+  .win-comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .win-comment-item {
+    display: flex;
+    gap: 0.85rem;
+  }
+  
+  .win-comment-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--win-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  
+  .win-comment-author {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+  
+  .win-comment-time {
+    font-weight: 400;
+    color: var(--win-text-muted);
+    font-size: 0.775rem;
+    margin-left: 0.35rem;
+  }
+  
+  .win-comment-text {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #d1d5db;
+  }
+  
+  /* Sidebar */
+  .win-sidebar-title {
+    font-size: 1rem;
+    margin: 0 0 1rem 0;
+  }
+  
+  /* Responsive Collapsing for Smaller Displays */
+  @media (max-width: 1024px) {
+    .win-video-player-body {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+    
+    .win-video-player-header {
+      padding: 0.75rem 1rem;
+    }
+  }
+
+
+  :root {
+    --win-age-bg-overlay: rgba(5, 8, 15, 0.85);
+    --win-age-bg-card: rgba(17, 24, 39, 0.92);
+    --win-age-border: rgba(255, 255, 255, 0.1);
+    --win-age-primary: #0284c7;
+    --win-age-primary-hover: #0369a1;
+    --win-age-text-main: #f9fafb;
+    --win-age-text-muted: #9ca3af;
+    --win-age-radius: 16px;
+  }
+  
+  /* Modal Overlay Backdrop */
+  .win-age-verification-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: var(--win-age-bg-overlay);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--win-age-text-main);
+    animation: winAgeFadeIn 0.25s ease-out;
+  }
+  
+  /* Central Card */
+  .win-age-verification-modal {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    background: var(--win-age-bg-card);
+    border: 1px solid var(--win-age-border);
+    border-radius: var(--win-age-radius);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+    padding: 2.25rem 2rem 1.75rem 2rem;
+    text-align: center;
+    box-sizing: border-box;
+    animation: winAgeSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  /* Close Button */
+  .win-age-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--win-age-text-muted);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .win-age-modal-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--win-age-text-main);
+  }
+  
+  /* 18+ Icon Badge */
+  .win-age-modal-icon {
+    margin: 0 auto 1.25rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .win-age-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(225, 29, 72, 0.2) 0%, rgba(225, 29, 72, 0.05) 100%);
+    border: 2px solid #e11d48;
+    color: #fb7185;
+    font-size: 1.35rem;
+    font-weight: 800;
+    box-shadow: 0 0 20px rgba(225, 29, 72, 0.25);
+  }
+  
+  /* Text Content */
+  .win-age-modal-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--win-age-primary);
+    margin-bottom: 0.5rem;
+  }
+  
+  .win-age-modal-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 0.65rem 0;
+    color: var(--win-age-text-main);
+  }
+  
+  .win-age-modal-text {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--win-age-text-muted);
+    margin: 0 0 1.75rem 0;
+  }
+  
+  /* Action Buttons */
+  .win-age-modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .win-age-btn {
+    width: 100%;
+    padding: 0.85rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.925rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.15s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+  }
+  
+  .win-age-btn:active {
+    transform: scale(0.98);
+  }
+  
+  .win-age-btn-yes {
+    background: var(--win-age-primary);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  }
+  
+  .win-age-btn-yes:hover {
+    background: var(--win-age-primary-hover);
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+  }
+  
+  .win-age-btn-no {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--win-age-text-muted);
+    border: 1px solid var(--win-age-border);
+  }
+  
+  .win-age-btn-no:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--win-age-text-main);
+  }
+  
+  /* Security Footer */
+  .win-age-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 1.5rem;
+    font-size: 0.775rem;
+    color: #6b7280;
+  }
+  
+  /* Animations */
+  @keyframes winAgeFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes winAgeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
